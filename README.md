@@ -1,17 +1,18 @@
-Role Name
+K8S MultiNode Cluster Role
 =========
 
-A brief description of the role goes here.
+This is a role which can setup a Kubernetes multinode cluster over your local VMs as well as on any cloud platform. 
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+You could find a playbook over my github itself which would spun scalable ec2 instances over your cloud. You could run the same and then run this role to setup the Kubernetes Multinode cluster over those instances. One manual step is required before running this role which is to add the IPs in the inventory and name the host group specifically as "master" and "worker". 
+If you want to create the cluster on your local VM, create the inventory manually and run this role over the ansible controller node. 
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+A description of the settable variables for this role should go here, including  any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
 Dependencies
 ------------
