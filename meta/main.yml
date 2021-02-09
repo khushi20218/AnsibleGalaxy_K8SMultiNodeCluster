@@ -39,7 +39,7 @@ galaxy_info:
   #   - 7
   #   - 99.99
 
-  galaxy_tags: []
+  galaxy_tags:
     - kubernetes
     - K8sMultiNodeCluster
     # List tags for your role here, one per line. A tag is a keyword that describes
