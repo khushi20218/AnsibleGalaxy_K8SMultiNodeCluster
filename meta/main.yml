@@ -35,7 +35,7 @@ galaxy_info:
   galaxy_tags:
     - kubernetes
     - k8smultinodecluster
-    - aws_k8s
+    - awsk8s
     - kubeadm
     - flannel
     # List tags for your role here, one per line. A tag is a keyword that describes
