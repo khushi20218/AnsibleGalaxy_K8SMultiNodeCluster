@@ -1,0 +1,54 @@
+- name: copy aws cluster config file
+  template:
+          src: aws.yml
+          dest: /etc/kubernetes/aws.yml
+
+- name: kubeadm init
+  shell: set -o pipefail && kubeadm init --config=/etc/kubernetes/aws.yml  | tail -2 > output.txt
+  changed_when: False
+
+- name: read the output.txt file
+  command: cat output.txt
+  changed_when: False
+  register: token
+
+- name: test print token
+  debug:
+          msg: "{{ token }}"
+
+- name: token
+  debug:
+          msg: "{{ token.stdout | regex_replace('[\\\\]\n') }}"
+  register: token_final
+
+- name: register dummy host with variable
+  add_host:
+          name: "dummy"
+          command: "{{ token_final }}"
+
+- name: create .kube folder
+  file:
+          path: $HOME/.kube
+          state: directory
+
+- name: copy important files to .kube/config folder
+  copy:
+          remote_src: yes
+          src: /etc/kubernetes/admin.conf
+          dest: $HOME/.kube/config
+
+- name: change owner of .kube/config
+  file:
+          path: $HOME/.kube/config 
+          owner: "{{ ansible_effective_user_id }}"
+          group: "{{ ansible_effective_group_id }}"
+
+- name: flannel install
+  command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  changed_when: False
+
+- name: copying the config file to RHEL
+  fetch:
+          src: "/root/.kube/config"
+          dest: "/etc/ansible/roles/k8s-multinodecluster/tasks/"
+          flat: yes
